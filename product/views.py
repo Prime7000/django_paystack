@@ -39,7 +39,7 @@ def place_order(request):
                 'product': product,
                 'payment': payment,
                 'paystack_pub_key': public_key,
-                'amount': payment.amount_value(),
+                'amount_value': payment.amount_value(),
             })
         else:
             messages.error(request, 'Please correct the error below.')
