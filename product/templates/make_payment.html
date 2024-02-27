@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}make payment{% endblock %}
+
+{% block content %}
+<style>
+    .parent{
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<h1>Welcome to the payment page</h1>
+
+<div class="parent border p-3 m-3 rounded">
+
+    <h2> you are ordering {{item_amount}} of {{product.name}} at ${{total_cost}}</h2>
+
+    <div style="color: wheat;">
+        <button onclick = 'payWithPaystack()' class="bg-success text-white">proceed to payment</button> 
+    </div>
+    <script>
+        function payWithPaystack(){
+            let currency = "NGN";
+            let plan = '';
+            let ref = '{{payment.ref}}'
+            let amount = '{{payment.amount}}' 
+            let obj = {
+                key : "{{paystack_pub_key}}",
+                email : "{{payment.email}}",
+                amount : '{{payment.amount}}',
+                ref : ref,
+                callback : function(response){
+                   window.location.href = "{% url 'payment:verify' payment.ref %}";
+                },
+            };
+            if (Boolean(currency)){
+                obj.currency = currency.toUpperCase();
+            }
+            if (Boolean(plan)){
+                obj.plan = plan;
+            }
+            var handler = PaystackPop.setup(obj);
+            handler.openIframe();
+        }
+    </script>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+</div>
+{% endblock %}

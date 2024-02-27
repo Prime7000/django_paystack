@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}make payment{% endblock %}
+
+{% block content %}
+<hr>
+
+<h1>place your order page</h1>
+<form action="." method="POST">
+    {% csrf_token %}
+        {{ form.as_p }}
+    <Button type="submit">place order</Button>
+</form>
+
+<hr>
+
+{% endblock %}
