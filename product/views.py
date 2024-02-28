@@ -15,7 +15,7 @@ def detail(request, pk):
 
 
 def place_order(request):
-    pk = 1
+    pk = 4
     if request.method == 'POST':
         # product_id = request.POST.get('product_id')
         form = Place_order(request.POST)
